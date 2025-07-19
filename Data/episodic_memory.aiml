@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="2.0">
+
+<!-- ===================================================== -->
+<!-- EPISODIC MEMORY AIML                                 -->
+<!-- Handles conversation history and past events         -->
+<!-- ===================================================== -->
+
+<!-- Conversation History Queries -->
+<category>
+    <pattern>WHAT DID WE TALK ABOUT</pattern>
+    <template>
+        <python>
+            from Memory.views import get_conversation_history
+            try:
+                session = bot.getSessionData(sessionID, "session")
+                history = get_conversation_history(session, limit=5)
+                if history:
+                    topics = []
+                    for entry in history:
+                        if entry.get('user_message'):
+                            topics.append(f"You asked about: {entry['user_message'][:50]}...")
+                    if topics:
+                        return f"Recently we discussed: {', '.join(topics[:3])}"
+                    else:
+                        return "We haven't had much conversation yet."
+                else:
+                    return "I don't have any conversation history stored yet."
+            except:
+                return "I'm having trouble accessing our conversation history right now."
+        </python>
+    </template>
+</category>
+
+<category>
+    <pattern>WHAT WAS MY LAST MESSAGE</pattern>
+    <template>
+        <python>
+            from Memory.views import get_conversation_history
+            try:
+                session = bot.getSessionData(sessionID, "session")
+                history = get_conversation_history(session, limit=1)
+                if history and history[0].get('user_message'):
+                    return f"Your last message was: '{history[0]['user_message']}'"
+                else:
+                    return "I don't recall your last message."
+            except:
+                return "I'm having trouble recalling your last message."
+        </python>
+    </template>
+</category>
+
+<category>
+    <pattern>WHAT WAS YOUR LAST RESPONSE</pattern>
+    <template>
+        <python>
+            from Memory.views import get_conversation_history
+            try:
+                session = bot.getSessionData(sessionID, "session")
+                history = get_conversation_history(session, limit=1)
+                if history and history[0].get('bot_response'):
+                    return f"I last said: '{history[0]['bot_response']}'"
+                else:
+                    return "I don't recall my last response."
+            except:
+                return "I'm having trouble recalling my last response."
+        </python>
+    </template>
+</category>
+
+<!-- Past Flight History -->
+<category>
+    <pattern>WHEN DID I LAST FLY</pattern>
+    <template>
+        <python>
+            from Memory.models import Sense
+            try:
+                session = bot.getSessionData(sessionID, "session")
+                last_flight = Sense.nodes.filter(sense_name__startswith="FLIGHT").order_by('-created_at').first()
+                if last_flight:
+                    return f"Your last flight was {last_flight.sense_name} which recorded data like battery: {last_flight.battery}, height: {last_flight.height}, and flight time: {last_flight.flight_time}."
+                else:
+                    return "I don't have any flight history recorded yet."
+            except:
+                return "I'm having trouble accessing your flight history."
+        </python>
+    </template>
+</category>
+
+<category>
+    <pattern>FLIGHT HISTORY</pattern>
+    <template><srai>WHEN DID I LAST FLY</srai></template>
+</category>
+
+<category>
+    <pattern>HOW MANY FLIGHTS HAVE I TAKEN</pattern>
+    <template>
+        <python>
+            from Memory.models import Sense
+            try:
+                session = bot.getSessionData(sessionID, "session")
+                flight_count = Sense.nodes.filter(sense_name__startswith="FLIGHT").count()
+                if flight_count > 0:
+                    return f"You have taken {flight_count} flight{'s' if flight_count != 1 else ''} with me."
+                else:
+                    return "We haven't taken any flights together yet."
+            except:
+                return "I'm having trouble counting your flights."
+        </python>
+    </template>
+</category>
+
+<!-- Conversation Topic Memory -->
+<category>
+    <pattern>DO YOU REMEMBER WHEN I ASKED ABOUT *</pattern>
+    <template>
+        <python>
+            topic = "<star/>".lower()
+            from Memory.views import search_conversation_history
+            try:
+                session = bot.getSessionData(sessionID, "session")
+                results = search_conversation_history(session, topic)
+                if results:
+                    return f"Yes, I remember you asking about {topic}. We discussed it {len(results)} time{'s' if len(results) != 1 else ''}."
+                else:
+                    return f"I don't recall you asking about {topic} specifically."
+            except:
+                return f"I'm having trouble searching for our discussion about {topic}."
+        </python>
+    </template>
+</category>
+
+<category>
+    <pattern>HAVE WE TALKED ABOUT *</pattern>
+    <template><srai>DO YOU REMEMBER WHEN I ASKED ABOUT <star/></srai></template>
+</category>
+
+<!-- Personal Event Memory -->
+<category>
+    <pattern>REMEMBER THAT *</pattern>
+    <template>
+        <python>
+            event = "<star/>"
+            from Memory.views import store_personal_event
+            try:
+                session = bot.getSessionData(sessionID, "session")
+                store_personal_event(session, event)
+                return f"I'll remember that {event}."
+            except:
+                return f"I'm having trouble remembering that {event}."
+        </python>
+    </template>
+</category>
+
+<category>
+    <pattern>WHAT DO YOU REMEMBER ABOUT ME</pattern>
+    <template>
+        <python>
+            from Memory.views import get_personal_events
+            try:
+                session = bot.getSessionData(sessionID, "session")
+                events = get_personal_events(session)
+                if events:
+                    return f"I remember: {', '.join(events[:3])}{'...' if len(events) > 3 else ''}"
+                else:
+                    return "I'm still learning about you! Feel free to tell me things to remember."
+            except:
+                return "I'm having trouble accessing what I know about you."
+        </python>
+    </template>
+</category>
+
+<!-- Time-based Queries -->
+<category>
+    <pattern>WHAT DID WE DO TODAY</pattern>
+    <template>
+        <python>
+            from Memory.views import get_today_activities
+            try:
+                session = bot.getSessionData(sessionID, "session")
+                activities = get_today_activities(session)
+                if activities:
+                    return f"Today we: {', '.join(activities)}"
+                else:
+                    return "We haven't done much together today yet."
+            except:
+                return "I'm having trouble recalling today's activities."
+        </python>
+    </template>
+</category>
+
+<category>
+    <pattern>WHAT DID WE DO YESTERDAY</pattern>
+    <template>
+        <python>
+            from Memory.views import get_yesterday_activities
+            try:
+                session = bot.getSessionData(sessionID, "session")
+                activities = get_yesterday_activities(session)
+                if activities:
+                    return f"Yesterday we: {', '.join(activities)}"
+                else:
+                    return "I don't have any records of activities from yesterday."
+            except:
+                return "I'm having trouble recalling yesterday's activities."
+        </python>
+    </template>
+</category>
+
+<!-- Learning and Experience -->
+<category>
+    <pattern>WHAT HAVE YOU LEARNED ABOUT FLYING</pattern>
+    <template>
+        <python>
+            from Memory.models import Sense
+            try:
+                flights = Sense.nodes.filter(sense_name__startswith="FLIGHT")
+                if flights.count() > 0:
+                    avg_battery = sum(int(f.battery.replace('%', '')) for f in flights) / flights.count()
+                    max_height = max(int(f.height.replace(' cm', '')) for f in flights if f.height)
+                    return f"From {flights.count()} flights, I've learned that: average battery usage is around {avg_battery:.1f}%, and the highest I've flown is {max_height} cm."
+                else:
+                    return "I haven't had any flight experiences to learn from yet."
+            except:
+                return "I'm having trouble analyzing my flight experiences."
+        </python>
+    </template>
+</category>
+
+<!-- Conversation Context -->
+<category>
+    <pattern>WHAT WERE WE TALKING ABOUT</pattern>
+    <template><srai>WHAT DID WE TALK ABOUT</srai></template>
+</category>
+
+<category>
+    <pattern>CONTINUE OUR CONVERSATION</pattern>
+    <template>
+        <python>
+            from Memory.views import get_conversation_history
+            try:
+                session = bot.getSessionData(sessionID, "session")
+                history = get_conversation_history(session, limit=1)
+                if history and history[0].get('user_message'):
+                    last_topic = history[0]['user_message']
+                    return f"We were discussing: {last_topic}. Would you like to continue with that topic?"
+                else:
+                    return "We can start a new conversation! What would you like to talk about?"
+            except:
+                return "Let's start fresh! What's on your mind?"
+        </python>
+    </template>
+</category>
+
+<!-- Repetition Detection -->
+<category>
+    <pattern>* AGAIN</pattern>
+    <template>
+        <python>
+            query = "<star/>"
+            from Memory.views import check_repeated_query
+            try:
+                session = bot.getSessionData(sessionID, "session")
+                is_repeated = check_repeated_query(session, query)
+                if is_repeated:
+                    return f"I notice you're asking about {query} again. Is there something specific you'd like me to clarify?"
+                else:
+                    # Process the query normally
+                    return None  # Let AIML continue processing
+            except:
+                return None  # Let AIML continue processing
+        </python>
+    </template>
+</category>
+
+<!-- Memory Statistics -->
+<category>
+    <pattern>HOW MUCH DO YOU REMEMBER</pattern>
+    <template>
+        <python>
+            from Memory.views import get_memory_stats
+            try:
+                session = bot.getSessionData(sessionID, "session")
+                stats = get_memory_stats(session)
+                return f"I remember {stats.get('conversations', 0)} conversations, {stats.get('flights', 0)} flights, and {stats.get('personal_events', 0)} personal events about you."
+            except:
+                return "I'm still building up my memories about our interactions."
+        </python>
+    </template>
+</category>
+
+<category>
+    <pattern>MEMORY STATUS</pattern>
+    <template><srai>HOW MUCH DO YOU REMEMBER</srai></template>
+</category>
+
+</aiml> 

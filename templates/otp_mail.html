@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Reset</title>
+</head>
+<body style="font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #fff;">
+    <table style="width: 100%; max-width: 600px; margin: 0 auto; background-color: #252525; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+        <tr>
+            <td style="padding: 35px; text-align: center;">
+                <a href="https://ibb.co/FVwY0z9">
+                    <img src="https://i.ibb.co/rs6pcHg/logo.png" alt="Logo" style="max-width: 161px; height: auto; display: block; margin: 0 auto 20px;" border="0">
+                </a>          
+                <img src="https://cdn.templates.unlayer.com/assets/1597218650916-xxxxc.png" alt="Message Image" style="max-width: 260px; margin-top: 10px; height: 70px; display: block; margin: 0 auto;">
+                <h1 style="font-size: 16px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; color:#3cedb2;">Password Reset</h1>
+                <p style="font-size: 20px; margin-bottom: 20px; color: #fff;">Dear {{ name }},</p>
+                <p style="font-size: 14px; margin-bottom: 20px; color: #fff;">Your OTP for password reset is:</p>
+                
+                <div style="background-color: #3cedb2; color: #fff; font-size: 24px; padding: 10px 20px; border-radius: 5px; display: inline-block; margin-bottom: 20px;">
+                    {% for char in otp %}
+                        <span style="text-decoration: underline;">{{ char }}</span>{% if not forloop.last %}&nbsp;{% endif %}
+                    {% endfor %}
+                </div>
+                <p style="font-size: 14px; margin-bottom: 20px; color: #fff;">Please use this OTP to reset your password. This OTP is valid for a limited time.</p>
+                <p style="font-size: 14px; margin-bottom: 20px; color: #fff;">If you did not request a password reset, please ignore this email.</p>
+                <p style="font-style: italic; margin-top: 20px; color: #fff;">Best regards,<br>A2B LouBot</p>
+                <div style="margin-top: 20px;">
+                    <h3 style="font-size: 14px; margin-bottom: 10px; color: #fff;">Get in touch with me</h3>
+                    <a href="https://www.facebook.com/profile.php?id=100016213909392" style="text-decoration: none; color: #fff;">
+                        <img src="https://cdn.tools.unlayer.com/social/icons/circle-black/facebook.png" alt="Facebook" style="width: 30px; height: auto; margin-right: 10px; vertical-align: middle;">
+                    </a>
+                    <a href="https://www.linkedin.com/in/Anns-bilal-27a9b7226/" style="text-decoration: none; color: #fff;">
+                        <img src="https://cdn.tools.unlayer.com/social/icons/circle-black/linkedin.png" alt="LinkedIn" style="width: 30px; height: auto; margin-right: 10px; vertical-align: middle;">
+                    </a>
+                    <a href="https://www.instagram.com/i._.annsijaz__/" style="text-decoration: none; color: #fff;">
+                        <img src="https://cdn.tools.unlayer.com/social/icons/circle-black/instagram.png" alt="Instagram" style="width: 30px; height: auto; margin-right: 10px; vertical-align: middle;">
+                    </a>
+                    <a href="mailto:annsijaz@outlook.com" style="text-decoration: none; color: #fff;">
+                        <img src="https://cdn.tools.unlayer.com/social/icons/circle-black/email.png" alt="Email" style="width: 30px; height: auto; margin-right: 10px; vertical-align: middle;">
+                    </a>
+                </div>
+                <p style="font-size: 14px; margin-top: 20px; color: #fff;">Copyrights © A2B All Rights Reserved</p>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

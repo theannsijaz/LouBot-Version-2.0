@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="1.0">
+
+  <!-- Land the drone -->
+  <category>
+    <pattern>LAND</pattern>
+    <template>
+      <think><set name="land">true</set></think>
+      Landing now.
+    </template>
+  </category>
+
+  <category>
+    <pattern>LAND THE DRONE</pattern>
+    <template>
+      <think><set name="land">true</set></think>
+      Landing the drone now.
+    </template>
+  </category>
+
+  <category>
+    <pattern>BRING IT DOWN</pattern>
+    <template>
+      <think><set name="land">true</set></think>
+      Bringing the drone down for landing.
+    </template>
+  </category>
+
+  <category>
+    <pattern>COME DOWN</pattern>
+    <template>
+      <think><set name="land">true</set></think>
+      Initiating landing sequence.
+    </template>
+  </category>
+
+  <category>
+    <pattern>PLEASE LAND</pattern>
+    <template>
+      <think><set name="land">true</set></think>
+      Landing the drone as requested.
+    </template>
+  </category>
+
+  <category>
+    <pattern>* LAND *</pattern>
+    <template>
+      <think><set name="land">true</set></think>
+      Landing the drone now.
+    </template>
+  </category>
+
+  <category>
+    <pattern>LAND NOW</pattern>
+    <template>
+      <think><set name="land">true</set></think>
+      Executing immediate landing.
+    </template>
+  </category>
+
+  <category>
+    <pattern>RETURN TO GROUND</pattern>
+    <template>
+      <think><set name="land">true</set></think>
+      Returning drone to ground level.
+    </template>
+  </category>
+
+  <category>
+    <pattern>TURN ON MOTORS</pattern>
+    <template>
+      <think><set name="turnon">true</set></think>
+      Starting motors.
+    </template>
+  </category>
+
+  <category>
+    <pattern>WARM UP FOR * SECONDS</pattern>
+    <template>
+      <think>
+        <set name="sec"><star/></set>
+      </think>
+      Warming up for <star/> seconds.
+    </template>
+  </category>
+
+  <!-- MOVE FORWARD N -->
+  <category>
+    <pattern>MOVE FORWARD *</pattern>
+    <template>
+      <think><set name="moveforward"><star/></set></think>
+      Moving forward <star/> centimetres.
+    </template>
+  </category>
+
+  <category>
+    <pattern>MOVE BACKWARD *</pattern>
+    <template>
+      <think><set name="movebackward"><star/></set></think>
+      Moving backward <star/> centimetres.
+    </template>
+  </category>
+
+  <category>
+    <pattern>MOVE LEFT *</pattern>
+    <template>
+      <think><set name="moveleft"><star/></set></think>
+      Moving left <star/> centimetres.
+    </template>
+  </category>
+
+  <category>
+    <pattern>MOVE RIGHT *</pattern>
+    <template>
+      <think><set name="moveright"><star/></set></think>
+      Moving right <star/> centimetres.
+    </template>
+  </category>
+
+  <category>
+    <pattern>move forward *</pattern>
+    <template><srai>MOVE FORWARD <star/></srai></template>
+  </category>
+
+  <!-- Very forgiving patterns -->
+  <category>
+    <pattern>* MOVE FORWARD * *</pattern>
+    <template>
+      <think><set name="moveforward"><star index="3"/></set></think>
+      Moving forward <star index="3"/> centimetres.
+    </template>
+  </category>
+
+  <category>
+    <pattern>* MOVE BACKWARD * *</pattern>
+    <template>
+      <think><set name="movebackward"><star index="3"/></set></think>
+      Moving backward <star index="3"/> centimetres.
+    </template>
+  </category>
+
+  <category>
+    <pattern>* MOVE LEFT * *</pattern>
+    <template>
+      <think><set name="moveleft"><star index="3"/></set></think>
+      Moving left <star index="3"/> centimetres.
+    </template>
+  </category>
+
+  <category>
+    <pattern>* MOVE RIGHT * *</pattern>
+    <template>
+      <think><set name="moveright"><star index="3"/></set></think>
+      Moving right <star index="3"/> centimetres.
+    </template>
+  </category>
+
+</aiml>

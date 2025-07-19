@@ -1,0 +1,887 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LouBot - Login & Signup</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'assets/images/favicon.png' %}" type="image/x-icon" />
+    <link rel="shortcut icon" href="{% static 'assets/images/favicon.png' %}" type="image/x-icon" />
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Custom Styles -->
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --primary-light: #818cf8;
+            
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #111111;
+            --bg-tertiary: #1a1a1a;
+            --bg-card: #161616;
+            --bg-elevated: #1e1e1e;
+            
+            --text-primary: #ffffff;
+            --text-secondary: #a3a3a3;
+            --text-muted: #737373;
+            
+            --border-primary: #262626;
+            --border-secondary: #404040;
+            
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+            
+            --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            --gradient-card: linear-gradient(135deg, #161616 0%, #1e1e1e 100%);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+            z-index: -1;
+        }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--bg-tertiary);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 3px;
+        }
+        
+        /* Auth Container */
+        .auth-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 2rem;
+            background: var(--gradient-card);
+            border-radius: 20px;
+            border: 1px solid var(--border-primary);
+            box-shadow: var(--shadow-xl);
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 600px;
+        }
+        
+        /* Left Panel */
+        .auth-left {
+            background: var(--gradient-primary);
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .auth-left::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .auth-left-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .auth-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .auth-logo img {
+            height: 60px;
+            width: auto;
+            filter: brightness(0) invert(1);
+        }
+        
+        .auth-logo h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .auth-left h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 1rem;
+        }
+        
+        .auth-left p {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+        
+        .feature-list {
+            list-style: none;
+            text-align: left;
+        }
+        
+        .feature-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+        }
+        
+        .feature-list i {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.2rem;
+        }
+        
+        /* Right Panel */
+        .auth-right {
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .auth-tabs {
+            display: flex;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 0.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .auth-tab {
+            flex: 1;
+            padding: 0.75rem 1.5rem;
+            background: transparent;
+            border: none;
+            border-radius: 8px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .auth-tab.active {
+            background: var(--gradient-primary);
+            color: white;
+        }
+        
+        .auth-form {
+            display: none;
+        }
+        
+        .auth-form.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-primary);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+        
+        .form-input::placeholder {
+            color: var(--text-muted);
+        }
+        
+        .btn-primary {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .btn-secondary {
+            width: 100%;
+            padding: 0.75rem;
+            background: transparent;
+            border: 2px solid var(--border-secondary);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 1.5rem 0;
+            color: var(--text-muted);
+        }
+        
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border-primary);
+        }
+        
+        .divider span {
+            padding: 0 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .forgot-password {
+            text-align: center;
+            margin-top: 1rem;
+        }
+        
+        .forgot-password a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+        
+        .back-home {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .back-home:hover {
+            color: var(--primary);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .auth-container {
+                grid-template-columns: 1fr;
+                margin: 1rem;
+                max-width: 400px;
+            }
+            
+            .auth-left {
+                padding: 2rem;
+                min-height: 300px;
+            }
+            
+            .auth-right {
+                padding: 2rem;
+            }
+            
+            .auth-logo h1 {
+                font-size: 2rem;
+            }
+            
+            .auth-left h2 {
+                font-size: 1.5rem;
+            }
+            
+            .back-home {
+                top: 1rem;
+                left: 1rem;
+            }
+        }
+        
+        /* Animations */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-slideInUp {
+            animation: slideInUp 0.6s ease-out;
+        }
+        
+        .animate-delay-1 {
+            animation-delay: 0.2s;
+        }
+        
+        .animate-delay-2 {
+            animation-delay: 0.4s;
+        }
+        
+        /* Loading state */
+        .loading {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: loading 1.5s infinite;
+        }
+        
+        @keyframes loading {
+            0% {
+                left: -100%;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+    </style>
+    </head>
+<body>
+    <a href="{% url 'index' %}" class="back-home">
+        <i class="bi bi-arrow-left"></i>
+        Back to Home
+    </a>
+
+    <div class="auth-container animate-slideInUp">
+        <!-- Left Panel -->
+        <div class="auth-left">
+            <div class="auth-left-content">
+                <div class="auth-logo">
+                    <img src="{% static 'logo.png' %}" alt="LouBot Logo">
+                    <h1>LouBot</h1>
+                </div>
+                <h2>Welcome to the Future</h2>
+                <p>Experience the next generation of AI interaction with advanced features designed to enhance your productivity.</p>
+                
+                <ul class="feature-list">
+                    <li>
+                        <i class="bi bi-robot"></i>
+                        Intelligent AI Chatbot
+                    </li>
+                    <li>
+                        <i class="bi bi-camera"></i>
+                        Face Recognition Login
+                    </li>
+                    <li>
+                        <i class="bi bi-mic"></i>
+                        Speech-to-Text Processing
+                    </li>
+                    <li>
+                        <i class="fas fa-drone"></i>
+                        Drone Control System
+                            </li>
+                    <li>
+                        <i class="bi bi-shield-check"></i>
+                        Secure & Private
+                            </li>
+                        </ul>
+            </div>
+        </div>
+
+        <!-- Right Panel -->
+        <div class="auth-right">
+            <!-- Tab Navigation -->
+            <div class="auth-tabs">
+                <button class="auth-tab active" onclick="switchTab('login')">Login</button>
+                <button class="auth-tab" onclick="switchTab('signup')">Sign Up</button>
+            </div>
+
+            <!-- Login Form -->
+            <div id="loginForm" class="auth-form active">
+                <h3 style="color: var(--text-primary); margin-bottom: 1.5rem; font-weight: 600;">Welcome Back!</h3>
+                
+                <form method="post" action="{% url 'signup_login' 'login' %}">
+                                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="loginEmail" class="form-label">Email Address</label>
+                        <input type="email" id="loginEmail" name="emailid" class="form-input" placeholder="Enter your email" required>
+                                    </div>
+                    
+                    <div class="form-group">
+                        <label for="loginPassword" class="form-label">Password</label>
+                        <input type="password" id="loginPassword" name="password" class="form-input" placeholder="Enter your password" required>
+                                    </div>
+                    
+                    <input type="hidden" name="ip_address" id="loginIpAddress">
+
+                    <button type="submit" class="btn-primary">
+                        <i class="bi bi-box-arrow-in-right"></i>
+                        Sign In
+                    </button>
+                </form>
+
+                <div class="divider">
+                    <span>or</span>
+                                    </div>  
+
+                <!-- Enhanced Face ID/Touch ID Button -->
+                <button type="button" id="biometricLoginBtn" class="btn-secondary">
+                    <i class="bi bi-hourglass-split"></i>
+                    <span id="biometricBtnText">Checking biometric support...</span>
+                </button>
+
+
+
+                <!-- Biometric Registration Button (shown after successful login) -->
+                <button type="button" id="setupBiometricBtn" class="btn-outline" style="display: none;">
+                    <i class="bi bi-shield-plus"></i>
+                    Set up Face ID/Touch ID
+                </button>
+
+                <div class="forgot-password">
+                    <a href="{% url 'forgot1' %}">Forgot your password?</a>
+                                    </div>
+                            </div>
+
+            <!-- Signup Form -->
+            <div id="signupForm" class="auth-form">
+                <h3 style="color: var(--text-primary); margin-bottom: 1.5rem; font-weight: 600;">Create Account</h3>
+                
+                <form method="post" action="{% url 'signup_login' 'signup' %}" id="signupFormElement">
+                                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="signupName" class="form-label">Full Name</label>
+                        <input type="text" id="signupName" name="name" class="form-input" placeholder="Enter your full name" required>
+                                    </div>
+                    
+                    <div class="form-group">
+                        <label for="signupEmail" class="form-label">Email Address</label>
+                        <input type="email" id="signupEmail" name="email" class="form-input" placeholder="Enter your email" required>
+                                    </div>
+                    
+                    <div class="form-group">
+                        <label for="signupPassword" class="form-label">Password</label>
+                        <input type="password" id="signupPassword" name="password" class="form-input" placeholder="Create a password" required>
+                                    </div>
+                    
+                    <div class="form-group">
+                        <label for="signupDob" class="form-label">Date of Birth</label>
+                        <input type="date" id="signupDob" name="dob" class="form-input" required>
+                    </div>
+                    
+                    <input type="hidden" name="ip_address" id="signupIpAddress">
+                    
+                    <button type="submit" class="btn-primary">
+                        <i class="bi bi-person-plus"></i>
+                        Create Account
+                    </button>
+                </form>
+                
+                <div class="divider">
+                    <span>or</span>
+                </div>
+                
+                <button type="button" class="btn-secondary" onclick="switchTab('login')">
+                    <i class="bi bi-box-arrow-in-right"></i>
+                    Already have an account?
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom Scripts -->
+    <script>
+        // Tab switching functionality
+        function switchTab(tab) {
+            // Update tab buttons
+            document.querySelectorAll('.auth-tab').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Update forms
+            document.querySelectorAll('.auth-form').forEach(form => form.classList.remove('active'));
+            document.getElementById(tab + 'Form').classList.add('active');
+        }
+        
+        // Get user IP address
+        function getUserIP() {
+            fetch('https://api.ipify.org?format=json')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('loginIpAddress').value = data.ip;
+                    document.getElementById('signupIpAddress').value = data.ip;
+                })
+                .catch(error => {
+                    console.log('Error getting IP:', error);
+                    document.getElementById('loginIpAddress').value = 'unknown';
+                    document.getElementById('signupIpAddress').value = 'unknown';
+                });
+        }
+        
+
+        
+        // Form submission handling
+        document.getElementById('signupFormElement').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            
+            // Show loading state
+            submitBtn.innerHTML = '<i class="bi bi-hourglass-split"></i> Creating Account...';
+            submitBtn.disabled = true;
+            submitBtn.classList.add('loading');
+            
+            // Submit the form directly
+            this.submit();
+        });
+        
+        // Login form loading state
+        document.querySelectorAll('form').forEach(form => {
+            if (form.id !== 'signupFormElement') {
+                form.addEventListener('submit', function() {
+                    const submitBtn = this.querySelector('button[type="submit"]');
+                    if (submitBtn) {
+                        submitBtn.innerHTML = '<i class="bi bi-hourglass-split"></i> Signing In...';
+                        submitBtn.disabled = true;
+                        submitBtn.classList.add('loading');
+                    }
+                });
+            }
+        });
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            getUserIP();
+            
+            // Add animation delays
+            document.querySelectorAll('.form-group').forEach((group, index) => {
+                group.style.animationDelay = `${index * 0.1}s`;
+                group.classList.add('animate-slideInUp');
+            });
+        });
+        
+        // Smooth transitions for form switching
+        document.querySelectorAll('.auth-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                const forms = document.querySelectorAll('.auth-form');
+                forms.forEach(form => {
+                    form.style.opacity = '0';
+                    form.style.transform = 'translateY(20px)';
+                });
+                
+                setTimeout(() => {
+                    forms.forEach(form => form.classList.remove('active'));
+                    const targetForm = document.getElementById(this.textContent.toLowerCase().replace(' ', '') + 'Form');
+                    if (targetForm) {
+                        targetForm.classList.add('active');
+                        targetForm.style.opacity = '1';
+                        targetForm.style.transform = 'translateY(0)';
+                    }
+                }, 150);
+            });
+        });
+        
+        // Enhanced form validation
+        document.querySelectorAll('.form-input').forEach(input => {
+            input.addEventListener('blur', function() {
+                if (this.value.trim() === '') {
+                    this.style.borderColor = '#ef4444';
+                } else {
+                    this.style.borderColor = '#22c55e';
+                }
+            });
+            
+            input.addEventListener('focus', function() {
+                this.style.borderColor = 'var(--primary)';
+            });
+        });
+    </script>
+    
+    <!-- WebAuthn Face ID/Touch ID Support -->
+    <script src="{% static 'assets/js/webauthn.js' %}"></script>
+    <script>
+        // WebAuthn Face ID/Touch ID Integration
+        document.addEventListener('DOMContentLoaded', async function() {
+            const biometricLoginBtn = document.getElementById('biometricLoginBtn');
+            const setupBiometricBtn = document.getElementById('setupBiometricBtn');
+            const biometricBtnText = document.getElementById('biometricBtnText');
+            const loginEmailInput = document.getElementById('loginEmail');
+            
+            console.log('Checking WebAuthn availability...');
+            
+            try {
+                // Check if WebAuthn is available
+                const isAvailable = await WebAuthnUtils.isBiometricAvailable();
+                console.log('WebAuthn available:', isAvailable);
+                
+                if (isAvailable) {
+                    // Show WebAuthn button
+                    biometricLoginBtn.style.display = 'block';
+                    biometricLoginBtn.querySelector('i').className = 'bi bi-shield-check';
+                    
+                    // Detect device type and update button text
+                    const userAgent = navigator.userAgent;
+                    if (userAgent.includes('Mac')) {
+                        biometricBtnText.textContent = navigator.userAgent.includes('Safari') ? 'Login with Touch ID' : 'Login with Touch ID';
+                    } else {
+                        biometricBtnText.textContent = 'Login with Face ID';
+                    }
+                
+                    // Handle biometric login
+                    biometricLoginBtn.addEventListener('click', async function() {
+                        const email = loginEmailInput.value.trim();
+                        
+                        if (!email) {
+                            alert('Please enter your email address first.');
+                            loginEmailInput.focus();
+                            return;
+                        }
+                        
+                        // Show loading state
+                        this.disabled = true;
+                        this.innerHTML = '<i class="bi bi-hourglass-split"></i> Checking credentials...';
+                        
+                        try {
+                            // First check if user has existing WebAuthn credentials
+                            const hasCredentials = await WebAuthnUtils.hasCredentials();
+                            
+                            if (!hasCredentials) {
+                                // No credentials found - user needs to register first
+                                this.innerHTML = '<i class="bi bi-info-circle"></i> Set up Face ID first';
+                                this.style.backgroundColor = '#3b82f6';
+                                
+                                // Show setup message
+                                alert('To use Face ID/Touch ID login, please:\n\n1. First log in with your email and password\n2. Then set up Face ID/Touch ID from the chat page\n3. Once set up, you can use this button to log in');
+                                
+                                // Reset button
+                                setTimeout(() => {
+                                    this.disabled = false;
+                                    this.innerHTML = '<i class="bi bi-shield-check"></i> <span>' + biometricBtnText.textContent + '</span>';
+                                    this.style.backgroundColor = '';
+                                }, 3000);
+                                
+                                return;
+                            }
+                            
+                            // User has credentials - proceed with authentication
+                            this.innerHTML = '<i class="bi bi-hourglass-split"></i> Authenticating...';
+                            
+                            const result = await WebAuthnUtils.loginWithBiometric(email);
+                            
+                            if (result.success) {
+                                // Success! Redirect to chat
+                                this.innerHTML = '<i class="bi bi-check-circle"></i> Success!';
+                                this.style.backgroundColor = '#22c55e';
+                                
+                                setTimeout(() => {
+                                    if (result.result.redirect) {
+                                        window.location.href = result.result.redirect;
+                                    } else {
+                                        window.location.href = '/chat';
+                                    }
+                                }, 1000);
+                            } else {
+                                throw new Error(result.message);
+                            }
+                        } catch (error) {
+                            // Handle error
+                            this.innerHTML = '<i class="bi bi-exclamation-circle"></i> Failed';
+                            this.style.backgroundColor = '#ef4444';
+                            
+                            setTimeout(() => {
+                                this.innerHTML = '<i class="bi bi-shield-check"></i> <span id="biometricBtnText">Login with Face ID/Touch ID</span>';
+                                this.style.backgroundColor = '';
+                                this.disabled = false;
+                            }, 2000);
+                            
+                            // Show error message
+                            alert('Face ID/Touch ID authentication failed: ' + error.message);
+                        }
+                    });
+                    
+                    // Handle biometric setup (shown after login)
+                    setupBiometricBtn.addEventListener('click', async function() {
+                        this.disabled = true;
+                        this.innerHTML = '<i class="bi bi-hourglass-split"></i> Setting up...';
+                        
+                        try {
+                            const result = await WebAuthnUtils.setupBiometricAuth();
+                            
+                            if (result.success) {
+                                this.innerHTML = '<i class="bi bi-check-circle"></i> Success!';
+                                this.style.backgroundColor = '#22c55e';
+                                
+                                alert('Face ID/Touch ID has been set up successfully! You can now use it to log in.');
+                                
+                                setTimeout(() => {
+                                    this.style.display = 'none';
+                                }, 2000);
+                            } else {
+                                throw new Error(result.message);
+                            }
+                        } catch (error) {
+                            this.innerHTML = '<i class="bi bi-exclamation-circle"></i> Failed';
+                            this.style.backgroundColor = '#ef4444';
+                            
+                            setTimeout(() => {
+                                this.innerHTML = '<i class="bi bi-shield-plus"></i> Set up Face ID/Touch ID';
+                                this.style.backgroundColor = '';
+                                this.disabled = false;
+                            }, 2000);
+                            
+                            alert('Setup failed: ' + error.message);
+                        }
+                    });
+                    
+                    // Check if user already has credentials and show setup button if logged in
+                    const hasCredentials = await WebAuthnUtils.hasCredentials();
+                    
+                    // Show setup button if user is logged in but doesn't have credentials
+                    // This would typically be shown after a successful traditional login
+                    if (!hasCredentials && document.body.dataset.userLoggedIn === 'true') {
+                        setupBiometricBtn.style.display = 'block';
+                    }
+                } else {
+                    // WebAuthn not supported, hide the button
+                    console.log('WebAuthn Face ID/Touch ID not supported');
+                    biometricLoginBtn.style.display = 'none';
+                }
+            } catch (error) {
+                console.error('Error checking WebAuthn availability:', error);
+                biometricLoginBtn.style.display = 'none'; // Hide the button on error
+            }
+        });
+        
+        // Show biometric setup option after successful traditional login
+        function showBiometricSetup() {
+            const setupBtn = document.getElementById('setupBiometricBtn');
+            if (setupBtn) {
+                setupBtn.style.display = 'block';
+            }
+        }
+        
+        // Enhanced login form to show biometric setup after successful login
+        const originalLoginForm = document.querySelector('form[action*="login"]');
+        if (originalLoginForm) {
+            originalLoginForm.addEventListener('submit', function() {
+                // Set a flag that we might want to show biometric setup
+                sessionStorage.setItem('showBiometricSetup', 'true');
+            });
+        }
+        
+        // Check if we should show biometric setup (after page reload from successful login)
+        if (sessionStorage.getItem('showBiometricSetup') === 'true') {
+            sessionStorage.removeItem('showBiometricSetup');
+            setTimeout(showBiometricSetup, 1000);
+        }
+    </script>
+</body>
+</html>

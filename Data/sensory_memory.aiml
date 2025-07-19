@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="2.0">
+
+<!-- ===================================================== -->
+<!-- SENSORY MEMORY AIML                                  -->
+<!-- Handles drone sensor data and visual detection       -->
+<!-- ===================================================== -->
+
+<!-- Visual Detection Patterns -->
+<category>
+<pattern>WHAT CAN YOU SEE</pattern>
+<template>{{CURRENT_DETECTIONS}}</template>
+</category>
+
+<category>
+<pattern>WHAT DO YOU SEE</pattern>
+<template>{{CURRENT_DETECTIONS}}</template>
+</category>
+
+<category>
+<pattern>CAN YOU SEE *</pattern>
+<template>{{CHECK_OBJECT_*}}</template>
+</category>
+
+<category>
+<pattern>DO YOU SEE A *</pattern>
+<template>{{CHECK_OBJECT_*}}</template>
+</category>
+
+<category>
+<pattern>IS THERE A * IN VIEW</pattern>
+<template>{{CHECK_OBJECT_*}}</template>
+</category>
+
+<category>
+<pattern>CAN YOU DETECT *</pattern>
+<template>{{CHECK_OBJECT_*}}</template>
+</category>
+
+<!-- Object Counting -->
+<category>
+<pattern>HOW MANY * CAN YOU SEE</pattern>
+<template>{{COUNT_OBJECTS_*}}</template>
+</category>
+
+<category>
+<pattern>COUNT THE *</pattern>
+<template>{{COUNT_OBJECTS_*}}</template>
+</category>
+
+<category>
+<pattern>HOW MANY * ARE THERE</pattern>
+<template>{{COUNT_OBJECTS_*}}</template>
+</category>
+
+<!-- Vision Status -->
+<category>
+<pattern>IS YOUR VISION WORKING</pattern>
+<template>{{VISION_STATUS}}</template>
+</category>
+
+<category>
+<pattern>CAN YOU SEE ANYTHING</pattern>
+<template>{{VISION_STATUS}}</template>
+</category>
+
+<category>
+<pattern>IS YOUR CAMERA ON</pattern>
+<template>{{VISION_STATUS}}</template>
+</category>
+
+<!-- Drone Sensor Patterns -->
+<category>
+<pattern>WHAT IS YOUR BATTERY LEVEL</pattern>
+<template>{{BATTERY_LEVEL}}</template>
+</category>
+
+<category>
+<pattern>HOW MUCH BATTERY DO YOU HAVE</pattern>
+<template>{{BATTERY_LEVEL}}</template>
+</category>
+
+<category>
+<pattern>BATTERY STATUS</pattern>
+<template>{{BATTERY_LEVEL}}</template>
+</category>
+
+<category>
+<pattern>WHAT IS THE TEMPERATURE</pattern>
+<template>{{TEMPERATURE}}</template>
+</category>
+
+<category>
+<pattern>HOW HOT IS IT</pattern>
+<template>{{TEMPERATURE}}</template>
+</category>
+
+<category>
+<pattern>WHAT IS YOUR HEIGHT</pattern>
+<template>{{CURRENT_HEIGHT}}</template>
+</category>
+
+<category>
+<pattern>HOW HIGH ARE YOU</pattern>
+<template>{{CURRENT_HEIGHT}}</template>
+</category>
+
+<category>
+<pattern>WHAT IS YOUR ALTITUDE</pattern>
+<template>{{CURRENT_HEIGHT}}</template>
+</category>
+
+<category>
+<pattern>HOW FAST ARE YOU GOING</pattern>
+<template>{{CURRENT_SPEED}}</template>
+</category>
+
+<category>
+<pattern>WHAT IS YOUR SPEED</pattern>
+<template>{{CURRENT_SPEED}}</template>
+</category>
+
+<category>
+<pattern>HOW LONG HAVE YOU BEEN FLYING</pattern>
+<template>{{FLIGHT_TIME}}</template>
+</category>
+
+<category>
+<pattern>FLIGHT TIME</pattern>
+<template>{{FLIGHT_TIME}}</template>
+</category>
+
+<category>
+<pattern>WHAT IS THE BAROMETRIC PRESSURE</pattern>
+<template>{{BAROMETER}}</template>
+</category>
+
+<category>
+<pattern>BAROMETER READING</pattern>
+<template>{{BAROMETER}}</template>
+</category>
+
+<!-- Specific Object Detection -->
+<category>
+<pattern>DO YOU SEE A PERSON</pattern>
+<template>{{CHECK_OBJECT_PERSON}}</template>
+</category>
+
+<category>
+<pattern>IS THERE A CAR</pattern>
+<template>{{CHECK_OBJECT_CAR}}</template>
+</category>
+
+<category>
+<pattern>CAN YOU SEE A DOG</pattern>
+<template>{{CHECK_OBJECT_DOG}}</template>
+</category>
+
+<category>
+<pattern>IS THERE A CAT</pattern>
+<template>{{CHECK_OBJECT_CAT}}</template>
+</category>
+
+<category>
+<pattern>DO YOU SEE A BIRD</pattern>
+<template>{{CHECK_OBJECT_BIRD}}</template>
+</category>
+
+</aiml> 

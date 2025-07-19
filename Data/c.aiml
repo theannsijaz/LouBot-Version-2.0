@@ -1,0 +1,63 @@
+<aiml>
+
+<category>
+  <pattern>MY NAME IS *</pattern>
+  <template>
+    <think>
+      <set name="name"><star/></set>
+    </think>
+  </template>
+</category>
+
+  <!-- Get Name -->
+  <category>
+    <pattern>WHAT IS MY NAME</pattern>
+    <template>
+      <condition name="name">
+        <li value="name"><random>Sorry, I don't know your name yet.</random></li>
+        <li><random>Your name is <get name="name"/>.</random></li>
+      </condition>
+    </template>
+  </category>
+
+  <category>
+    <pattern>DO YOU KNOW MY NAME</pattern>
+    <template>
+      <condition name="name">
+        <li value="name"><random>I'm sorry, I don't know your name yet.</random></li>
+        <li><random>Your name is <get name="name"/>.</random></li>
+      </condition>
+    </template>
+  </category>
+
+  <category>
+    <pattern>WHAT IS MY NAME?</pattern>
+    <template>
+      <condition name="name">
+        <li value="name"><random>I'm sorry, I don't know your name yet.</random></li>
+        <li><random>Your name is <get name="name"/>.</random></li>
+      </condition>
+    </template>
+  </category>
+
+<category>
+  <pattern>WHAT IS MY EMAIL</pattern>
+  <template>
+        <random>
+            <li>Your email is <get name="m"/>.</li>
+            <li>Your email address is <get name="m"/>. </li>
+        </random>
+  </template>
+</category>
+
+<category priority="2">
+  <pattern>WHAT ARE MY SENTIMENTS</pattern>
+  <template>
+    <random>
+      <li><get name="mood"/>.</li>
+      <li>You have <get name="m"/> sentiments.</li>
+    </random>
+  </template>
+</category> 
+
+</aiml>

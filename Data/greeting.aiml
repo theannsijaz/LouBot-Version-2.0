@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="2.0">
+	<!-- insert your AIML categories here -->
+	<category>
+	    <pattern>HELLO</pattern>
+	    <template>Hi there!  I'm the ChatBot </template>
+	</category>
+	
+	<category>
+	    <pattern>HI</pattern>
+	    <template><srai>HELLO</srai></template>
+	</category>
+
+	<category>
+	    <pattern>I AM ALSO FINE *</pattern>
+	    <template>Great to hear that you're doing fine!</template>
+	</category>
+
+	<category>
+	    <pattern>I AM ALSO FINE</pattern>
+	    <template>Great to hear that you're doing fine!</template>
+	</category>
+	
+	<category>
+	    <pattern>I AM FINE *</pattern>
+	    <template>Great to hear that you're doing fine!</template>
+	</category>
+
+	<category>
+	    <pattern>FINE </pattern>
+	    <template>Great to hear that you're doing fine!</template>
+	</category>
+
+	<category>
+	    <pattern>I AM FINE </pattern>
+	    <template>Great to hear that you're doing fine!</template>
+	</category>
+
+	<category>
+	    <pattern>HELLO THERE</pattern>
+	    <template><srai>HELLO</srai></template>
+	</category>
+	
+	<category>
+	    <pattern>GREETINGS</pattern>
+	    <template><srai>HELLO</srai></template>
+	</category>
+	
+	<category>
+	    <pattern>HI THERE</pattern>
+	    <template><srai>HELLO</srai></template>
+	</category>
+	
+	<category>
+	    <pattern>HOLA</pattern>
+	    <template><srai>HELLO</srai></template>
+	</category>
+	
+	<category>
+	    <pattern>YO</pattern>
+	    <template><srai>HELLO</srai></template>
+	</category>
+	
+	<category>
+	    <pattern>BONJOUR</pattern>
+	    <template><srai>HELLO</srai></template>
+	</category>
+	
+</aiml>

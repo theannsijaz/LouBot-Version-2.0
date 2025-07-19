@@ -1,0 +1,174 @@
+<aiml>
+<category>
+  <pattern>HELLO</pattern>
+  <template>Hi there!</template>
+</category>
+
+<category>
+  <pattern>Hi</pattern>
+  <template>Hi there!</template>
+</category>
+
+<category>
+  <pattern>WHAT IS YOUR NAME</pattern>
+  <template>My name is LouBot and I am an AI based Chatbot.</template>
+</category>
+
+<category>
+  <pattern>What is my name *</pattern>
+  <template>I dont want to know</template>
+</category>
+
+<category>
+  <pattern>MY NAME IS *</pattern>
+  <template>Nice to meet you, <star/></template>
+</category>
+
+<category>
+  <pattern>HOW ARE YOU</pattern>
+  <template>I'm doing well, thank you. How about you?</template>
+</category>
+
+<category>
+  <pattern>What is your GENDER</pattern>
+  <template>I am a AI robot and I have no Gender</template>
+</category>
+
+<category>
+  <pattern>WHO MADE YOU</pattern>
+  <template>I am a Ai chatbot and Anns Ijaz is my creator you can contact him at annsijaz@outlook.com</template>
+</category>
+
+<category>
+  <pattern>WHO CREATED YOU</pattern>
+  <template>I am a Ai chatbot and Anns Ijaz is my creator you can contact him at annsijaz@outlook.com</template>
+</category>
+
+<category>
+  <pattern>WHO CREATED YOU</pattern>
+  <template>I am a Ai chatbot and Anns Ijaz is my creator you can contact him at annsijaz@outlook.com</template>
+</category>
+
+<category>
+  <pattern>WHO MADE YOU</pattern>
+  <template>I am a Ai chatbot and Anns Ijaz is my creator you can contact him at annsijaz@outlook.com</template>
+</category>
+<category>
+  <pattern>WHAT IS YOUR GENDER?</pattern>
+  <template>I am a AI chatbot and i have no gender</template>
+</category>
+<category>
+  <pattern>CAN I KNOW YOUR GENDER</pattern>
+  <template>I am a AI chatbot and i have no gender</template>
+</category>
+<category>
+  <pattern>CAN I KNOW YOUR GENDAR</pattern>
+  <template>I am a AI chatbot and i have no gender</template>
+</category>
+
+<!-- Original pattern -->
+<category>
+  <pattern>WHO IS * OF *</pattern>
+  <template>
+    <think>
+      <set name="relationx"><star/></set>
+      <set name="namex"><star index="2"/></set>
+    </think>
+    <get name="namey"/> is <get name="relationx"/> of <get name="namex"/>.
+  </template>
+</category>
+
+<!-- New patterns for different question formats -->
+<category>
+  <pattern>WHO IS THE * OF *</pattern>
+  <template>
+    <think>
+      <set name="relationx"><star/></set>
+      <set name="namex"><star index="2"/></set>
+    </think>
+    <get name="namey"/> is <get name="relationx"/> of <get name="namex"/>.
+  </template>
+</category>
+
+<category>
+  <pattern>* OF *</pattern>
+  <template>
+    <think>
+      <set name="relationx"><star/></set>
+      <set name="namex"><star index="2"/></set>
+    </think>
+    <get name="namey"/> is <get name="relationx"/> of <get name="namex"/>.
+  </template>
+</category>
+
+<category>
+  <pattern>WHAT IS THE * OF *</pattern>
+  <template>
+    <think>
+      <set name="relationx"><star/></set>
+      <set name="namex"><star index="2"/></set>
+    </think>
+    <get name="namey"/> is <get name="relationx"/> of <get name="namex"/>.
+  </template>
+</category>
+
+<category>
+  <pattern>TELL ME THE * OF *</pattern>
+  <template>
+    <think>
+      <set name="relationx"><star/></set>
+      <set name="namex"><star index="2"/></set>
+    </think>
+    <get name="namey"/> is <get name="relationx"/> of <get name="namex"/>.
+  </template>
+</category>
+
+<category>
+  <pattern>SHOW ME THE * OF *</pattern>
+  <template>
+    <think>
+      <set name="relationx"><star/></set>
+      <set name="namex"><star index="2"/></set>
+    </think>
+    <get name="namey"/> is <get name="relationx"/> of <get name="namex"/>.
+  </template>
+</category>
+
+<category>
+  <pattern>WHO ARE THE * OF *</pattern>
+  <template>
+    <think>
+      <set name="relationx"><star/></set>
+      <set name="namex"><star index="2"/></set>
+    </think>
+    <get name="namey"/> is <get name="relationx"/> of <get name="namex"/>.
+  </template>
+</category>
+
+<category>
+  <pattern>FIND THE * OF *</pattern>
+  <template>
+    <think>
+      <set name="relationx"><star/></set>
+      <set name="namex"><star index="2"/></set>
+    </think>
+    <get name="namey"/> is <get name="relationx"/> of <get name="namex"/>.
+  </template>
+</category>
+
+<!-- <category>
+  <pattern>IS * * OF *</pattern>
+  <template>
+    <think>
+      <set name="personx"><star/></set>
+      <set name="relationv"><star index="2"/></set>
+      <set name="persony"><star index="3"/></set>
+    </think>
+    <condition name="relationv">
+      <li value="relationv">Yes, <get name="personx"/> is the <get name="relationv"/> of <get name="persony"/>.</li>
+      <li>No, <get name="personx"/> is not the <get name="relationx"/> of <get name="persony"/>.</li>
+    </condition>
+  </template>
+</category> -->
+
+</aiml>

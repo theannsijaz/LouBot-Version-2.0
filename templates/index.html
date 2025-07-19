@@ -1,0 +1,725 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LouBot - AI Chatbot Platform</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'assets/images/favicon.png' %}" type="image/x-icon" />
+    <link rel="shortcut icon" href="{% static 'assets/images/favicon.png' %}" type="image/x-icon" />
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Custom Styles -->
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --primary-light: #818cf8;
+            
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #111111;
+            --bg-tertiary: #1a1a1a;
+            --bg-card: #161616;
+            --bg-elevated: #1e1e1e;
+            
+            --text-primary: #ffffff;
+            --text-secondary: #a3a3a3;
+            --text-muted: #737373;
+            
+            --border-primary: #262626;
+            --border-secondary: #404040;
+            
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+            
+            --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            --gradient-card: linear-gradient(135deg, #161616 0%, #1e1e1e 100%);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--bg-tertiary);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 3px;
+        }
+        
+        /* Header */
+        .header {
+            background: rgba(26, 26, 26, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-primary);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+        
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .navbar-brand:hover {
+            color: var(--primary);
+        }
+        
+        .logo {
+            height: 40px;
+            width: auto;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary);
+        }
+        
+        .btn-primary {
+            background: var(--gradient-primary);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--border-secondary);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 8rem 0 4rem;
+            background: radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.1) 0%, transparent 50%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%23262626" stroke-width="0.5"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #ffffff 0%, #a3a3a3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+        
+        .hero .highlight {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            line-height: 1.6;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 4rem 0;
+            background: var(--bg-secondary);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .feature-card {
+            background: var(--gradient-card);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-primary);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            color: white;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+        
+        .feature-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        
+        /* Stats Section */
+        .stats {
+            padding: 4rem 0;
+            background: var(--bg-primary);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .stat-card {
+            text-align: center;
+            padding: 2rem;
+            background: var(--bg-card);
+            border-radius: 12px;
+            border: 1px solid var(--border-primary);
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        
+        /* CTA Section */
+        .cta {
+            padding: 4rem 0;
+            background: var(--bg-secondary);
+            text-align: center;
+        }
+        
+        .cta h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+        
+        .cta p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--bg-tertiary);
+            padding: 3rem 0 1rem;
+            border-top: 1px solid var(--border-primary);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h4 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .footer-section p,
+        .footer-section a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            line-height: 1.6;
+        }
+        
+        .footer-section a:hover {
+            color: var(--primary);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-primary);
+            color: var(--text-muted);
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-fadeInUp {
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        .animate-delay-1 {
+            animation-delay: 0.2s;
+        }
+        
+        .animate-delay-2 {
+            animation-delay: 0.4s;
+        }
+        
+        .animate-delay-3 {
+            animation-delay: 0.6s;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="d-flex justify-content-between align-items-center">
+                <a href="{% url 'index' %}" class="navbar-brand">
+                    <img src="{% static 'logo.png' %}" alt="LouBot Logo" class="logo">
+                    LouBot
+                </a>
+                <div class="nav-links">
+                    <a href="{% url 'index' %}" class="nav-link">Home</a>
+                    <a href="{% url 'about' %}" class="nav-link">About</a>
+                    <a href="{% url 'contact' %}" class="nav-link">Contact</a>
+                    {% if session %}
+                        <a href="{% url 'chat' %}" class="btn-primary">
+                            <i class="bi bi-chat-dots"></i>
+                            Chat Now
+                        </a>
+                        <a href="{% url 'signout' %}" class="nav-link">Logout</a>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="btn-secondary">Login</a>
+                        <a href="{% url 'chat' %}" class="btn-primary">
+                            <i class="bi bi-chat-dots"></i>
+                            Get Started
+                        </a>
+                    {% endif %}
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content animate-fadeInUp">
+                <h1>
+                    Welcome to <span class="highlight">LouBot</span><br>
+                    Where Knowledge Meets Logic
+                </h1>
+                <p>
+                    Discover the future of communication with LouBot—an advanced AI platform designed to enhance 
+                    productivity and revolutionize how you engage. Experience cutting-edge technology with face 
+                    detection, speech-to-text, drone control, and real-time intelligent responses.
+                </p>
+                <div class="hero-buttons">
+                    {% if session %}
+                        <a href="{% url 'chat' %}" class="btn-primary">
+                            <i class="bi bi-chat-dots"></i>
+                            Start Chatting
+                        </a>
+                        <a href="{% url 'about' %}" class="btn-secondary">
+                            <i class="bi bi-info-circle"></i>
+                            Learn More
+                        </a>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="btn-primary">
+                            <i class="bi bi-person-plus"></i>
+                            Get Started Free
+                        </a>
+                        <a href="{% url 'about' %}" class="btn-secondary">
+                            <i class="bi bi-play-circle"></i>
+                            Watch Demo
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="animate-fadeInUp">Powerful AI Features</h2>
+                <p class="animate-fadeInUp animate-delay-1">Experience the next generation of AI interaction</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card animate-fadeInUp animate-delay-1">
+                    <div class="feature-icon">
+                        <i class="bi bi-robot"></i>
+                    </div>
+                    <h3>Intelligent Chatbot</h3>
+                    <p>Advanced AIML-powered conversational AI that understands context and provides meaningful responses to your queries.</p>
+                </div>
+                <div class="feature-card animate-fadeInUp animate-delay-2">
+                    <div class="feature-icon">
+                        <i class="bi bi-camera"></i>
+                    </div>
+                    <h3>Face Recognition</h3>
+                    <p>Secure authentication using advanced face recognition technology for personalized user experiences.</p>
+                </div>
+                <div class="feature-card animate-fadeInUp animate-delay-3">
+                    <div class="feature-icon">
+                        <i class="bi bi-mic"></i>
+                    </div>
+                    <h3>Speech-to-Text</h3>
+                    <p>Convert your voice commands into text with high accuracy speech recognition technology.</p>
+                </div>
+                <div class="feature-card animate-fadeInUp animate-delay-1">
+                    <div class="feature-icon">
+                        <i class="fas fa-drone"></i>
+                    </div>
+                    <h3>Drone Control</h3>
+                    <p>Control DJI Tello drones with voice commands and real-time video streaming capabilities.</p>
+                </div>
+                <div class="feature-card animate-fadeInUp animate-delay-2">
+                    <div class="feature-icon">
+                        <i class="bi bi-file-code"></i>
+                    </div>
+                    <h3>Prolog Integration</h3>
+                    <p>Upload and execute Prolog files for advanced logical reasoning and knowledge base queries.</p>
+                </div>
+                <div class="feature-card animate-fadeInUp animate-delay-3">
+                    <div class="feature-icon">
+                        <i class="bi bi-graph-up"></i>
+                    </div>
+                    <h3>Real-time Analytics</h3>
+                    <p>Track user interactions and system performance with comprehensive analytics and insights.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="animate-fadeInUp">Trusted by Users Worldwide</h2>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card animate-fadeInUp animate-delay-1">
+                    <div class="stat-number">99%</div>
+                    <div class="stat-label">Accuracy Rate</div>
+                </div>
+                <div class="stat-card animate-fadeInUp animate-delay-2">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Available</div>
+                </div>
+                <div class="stat-card animate-fadeInUp animate-delay-3">
+                    <div class="stat-number">100+</div>
+                    <div class="stat-label">AI Responses</div>
+                </div>
+                <div class="stat-card animate-fadeInUp animate-delay-1">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">Possibilities</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    {% if faq %}
+    <section class="features">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="animate-fadeInUp">Frequently Asked Questions</h2>
+            </div>
+            <div class="features-grid">
+                {% for item in faq %}
+                <div class="feature-card animate-fadeInUp">
+                    <div class="feature-icon">
+                        <i class="bi bi-question-circle"></i>
+                    </div>
+                    <h3>{{ item.question }}</h3>
+                    <p>{{ item.answer }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2 class="animate-fadeInUp">Ready to Get Started?</h2>
+                            <p class="animate-fadeInUp animate-delay-1">Join thousands of users who trust LouBot for their AI needs</p>
+            {% if session %}
+                <a href="{% url 'chat' %}" class="btn-primary animate-fadeInUp animate-delay-2">
+                    <i class="bi bi-chat-dots"></i>
+                    Start Chatting Now
+                </a>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn-primary animate-fadeInUp animate-delay-2">
+                    <i class="bi bi-person-plus"></i>
+                    Create Free Account
+                </a>
+            {% endif %}
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>LouBot</h4>
+                    <p>Advanced AI chatbot platform with face recognition, speech-to-text, and drone control capabilities.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <div class="d-flex flex-column gap-2">
+                        <a href="{% url 'index' %}">Home</a>
+                        <a href="{% url 'about' %}">About</a>
+                        <a href="{% url 'contact' %}">Contact</a>
+                        <a href="{% url 'chat' %}">Chat</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Features</h4>
+                    <div class="d-flex flex-column gap-2">
+                        <a href="#">AI Chatbot</a>
+                        <a href="#">Face Recognition</a>
+                        <a href="#">Speech-to-Text</a>
+                        <a href="#">Drone Control</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <div class="d-flex flex-column gap-2">
+                        <a href="{% url 'contact' %}">Contact Us</a>
+                        <a href="#">Help Center</a>
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 LouBot. All rights reserved. Built with ❤️ by Anns Ijaz</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Animation Script -->
+    <script>
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animated elements
+        document.querySelectorAll('.animate-fadeInUp').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.8s ease-out, transform 0.8s ease-out';
+            observer.observe(el);
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

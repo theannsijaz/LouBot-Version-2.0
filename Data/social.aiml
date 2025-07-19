@@ -1,0 +1,25 @@
+<aiml>
+
+
+
+    <category>
+        <pattern>YES * IS MY *</pattern>
+        <template>
+            <think>
+                <set name="person_sn"><star index="1"/></set>
+                <set name="relation_sn"><star index="2"/></set>
+            </think>
+            <random>
+                <li>That's great to know about your <get name="relation"/>!</li>
+                <li>It's nice to hear about your <get name="relation"/>.</li>
+                <li>Wonderful! You and your <get name="relation"/> must be close.</li>
+                <li>How nice that <get name="person"/> is your <get name="relation"/>.</li>
+                <li>I hope you and your <get name="relation"/> have a great relationship.</li>
+            </random>
+        </template>
+    </category>
+
+
+
+
+</aiml>

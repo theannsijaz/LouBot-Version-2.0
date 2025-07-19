@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="2.0">
+
+<!-- ===================================================== -->
+<!-- SOCIAL MEMORY AIML                                   -->
+<!-- Handles user relationships and social interactions   -->
+<!-- ===================================================== -->
+
+<!-- User Profile Queries -->
+<category>
+    <pattern>WHAT IS MY NAME</pattern>
+    <template>
+        <python>
+            from Memory.models import Signups
+            try:
+                session = bot.getSessionData(sessionID, "session")
+                user = Signups.nodes.filter(uid=session).first()
+                if user and user.username:
+                    return f"Your name is {user.username}."
+                else:
+                    return "I don't know your name yet. Could you tell me?"
+            except:
+                return "I'm having trouble accessing your profile information."
+        </python>
+    </template>
+</category>
+
+<category>
+    <pattern>WHO AM I</pattern>
+    <template><srai>WHAT IS MY NAME</srai></template>
+</category>
+
+<category>
+    <pattern>WHAT IS MY EMAIL</pattern>
+    <template>
+        <python>
+            from Memory.models import Signups
+            try:
+                session = bot.getSessionData(sessionID, "session")
+                user = Signups.nodes.filter(uid=session).first()
+                if user and user.email:
+                    return f"Your email is {user.email}."
+                else:
+                    return "I don't have your email information."
+            except:
+                return "I'm having trouble accessing your profile information."
+        </python>
+    </template>
+</category>
+
+<category>
+    <pattern>WHAT IS MY GENDER</pattern>
+    <template>
+        <python>
+            from Memory.models import Signups
+            try:
+                session = bot.getSessionData(sessionID, "session")
+                user = Signups.nodes.filter(uid=session).first()
+                if user and user.gender:
+                    return f"You are {user.gender.lower()}."
+                else:
+                    return "I don't have your gender information."
+            except:
+                return "I'm having trouble accessing your profile information."
+        </python>
+    </template>
+</category>
+
+<category>
+    <pattern>WHEN IS MY BIRTHDAY</pattern>
+    <template>
+        <python>
+            from Memory.models import Signups
+            try:
+                session = bot.getSessionData(sessionID, "session")
+                user = Signups.nodes.filter(uid=session).first()
+                if user and user.dob:
+                    return f"Your birthday is on {user.dob}."
+                else:
+                    return "I don't have your birthday information."
+            except:
+                return "I'm having trouble accessing your profile information."
+        </python>
+    </template>
+</category>
+
+<!-- Social Network Queries -->
+<category>
+    <pattern>WHO ARE MY FRIENDS</pattern>
+    <template>
+        <python>
+            from Memory.models import Social_Network
+            try:
+                session = bot.getSessionData(sessionID, "session")
+                friends = Social_Network.nodes.filter(uid=session, relation_type="friend")
+                if friends:
+                    friend_names = [f.person_name for f in friends]
+                    return f"Your friends are: {', '.join(friend_names)}."
+                else:
+                    return "You haven't added any friends to your social network yet."
+            except:
+                return "I'm having trouble accessing your social network."
+        </python>
+    </template>
+</category>
+
+<category>
+    <pattern>WHO IS MY FAMILY</pattern>
+    <template>
+        <python>
+            from Memory.models import Social_Network
+            try:
+                session = bot.getSessionData(sessionID, "session")
+                family = Social_Network.nodes.filter(uid=session, relation_type__in=["father", "mother", "brother", "sister", "family"])
+                if family:
+                    family_list = [f"{f.person_name} ({f.relation_type})" for f in family]
+                    return f"Your family members are: {', '.join(family_list)}."
+                else:
+                    return "You haven't added any family members to your social network yet."
+            except:
+                return "I'm having trouble accessing your family information."
+        </python>
+    </template>
+</category>
+
+<category>
+    <pattern>WHO IS MY *</pattern>
+    <template>
+        <python>
+            relation = "<star/>".lower()
+            from Memory.models import Social_Network
+            try:
+                session = bot.getSessionData(sessionID, "session")
+                person = Social_Network.nodes.filter(uid=session, relation_type=relation).first()
+                if person:
+                    return f"Your {relation} is {person.person_name}."
+                else:
+                    return f"I don't have information about your {relation}."
+            except:
+                return f"I'm having trouble finding information about your {relation}."
+        </python>
+    </template>
+</category>
+
+<!-- Adding Social Connections -->
+<category>
+    <pattern>MY * IS *</pattern>
+    <template>
+        <python>
+            relation = "<star index='1'/>".lower()
+            name = "<star index='2'/>"
+            from Memory.models import Social_Network
+            from Memory.gender_names_db import detect_gender_from_name
+            try:
+                session = bot.getSessionData(sessionID, "session")
+                gender = detect_gender_from_name(name)
+                
+                # Check if already exists
+                existing = Social_Network.nodes.filter(uid=session, relation_type=relation).first()
+                if existing:
+                    existing.person_name = name
+                    existing.person_gender = gender
+                    existing.save()
+                    return f"Updated! Your {relation} is {name}."
+                else:
+                    # Create new relationship
+                    social_node = Social_Network(
+                        uid=session,
+                        person_name=name,
+                        relation_type=relation,
+                        person_gender=gender
+                    ).save()
+                    return f"Got it! I'll remember that your {relation} is {name}."
+            except:
+                return f"I'm having trouble remembering that your {relation} is {name}."
+        </python>
+    </template>
+</category>
+
+<!-- Social Interaction History -->
+<category>
+    <pattern>HOW MANY PEOPLE DO I KNOW</pattern>
+    <template>
+        <python>
+            from Memory.models import Social_Network
+            try:
+                session = bot.getSessionData(sessionID, "session")
+                count = Social_Network.nodes.filter(uid=session).count()
+                if count > 0:
+                    return f"You have {count} people in your social network."
+                else:
+                    return "You haven't added anyone to your social network yet."
+            except:
+                return "I'm having trouble counting your social connections."
+        </python>
+    </template>
+</category>
+
+<category>
+    <pattern>SOCIAL NETWORK</pattern>
+    <template><srai>HOW MANY PEOPLE DO I KNOW</srai></template>
+</category>
+
+<!-- Personal Preferences and Social Context -->
+<category>
+    <pattern>I LIKE *</pattern>
+    <template>
+        <python>
+            preference = "<star/>"
+            from Memory.views import store_user_preference
+            try:
+                session = bot.getSessionData(sessionID, "session")
+                store_user_preference(session, "likes", preference)
+                return f"I'll remember that you like {preference}."
+            except:
+                return f"I'm having trouble remembering that you like {preference}."
+        </python>
+    </template>
+</category>
+
+<category>
+    <pattern>I DONT LIKE *</pattern>
+    <template>
+        <python>
+            dislike = "<star/>"
+            from Memory.views import store_user_preference
+            try:
+                session = bot.getSessionData(sessionID, "session")
+                store_user_preference(session, "dislikes", dislike)
+                return f"I'll remember that you don't like {dislike}."
+            except:
+                return f"I'm having trouble remembering that you don't like {dislike}."
+        </python>
+    </template>
+</category>
+
+<category>
+    <pattern>I HATE *</pattern>
+    <template><srai>I DONT LIKE <star/></srai></template>
+</category>
+
+<category>
+    <pattern>WHAT DO I LIKE</pattern>
+    <template>
+        <python>
+            from Memory.views import get_user_preferences
+            try:
+                session = bot.getSessionData(sessionID, "session")
+                preferences = get_user_preferences(session, "likes")
+                if preferences:
+                    return f"You like: {', '.join(preferences)}."
+                else:
+                    return "I don't know what you like yet. Tell me about your interests!"
+            except:
+                return "I'm having trouble accessing your preferences."
+        </python>
+    </template>
+</category>
+
+<category>
+    <pattern>WHAT DO I DISLIKE</pattern>
+    <template>
+        <python>
+            from Memory.views import get_user_preferences
+            try:
+                session = bot.getSessionData(sessionID, "session")
+                preferences = get_user_preferences(session, "dislikes")
+                if preferences:
+                    return f"You dislike: {', '.join(preferences)}."
+                else:
+                    return "I don't know what you dislike yet."
+            except:
+                return "I'm having trouble accessing your preferences."
+        </python>
+    </template>
+</category>
+
+<!-- Social Context Awareness -->
+<category>
+    <pattern>AM I ALONE</pattern>
+    <template>
+        <python>
+            from Memory.views import get_current_detections
+            try:
+                detections = get_current_detections()
+                if detections:
+                    people_count = sum(1 for obj in detections if 'person' in obj['name'].lower())
+                    if people_count > 1:
+                        return f"No, I can see {people_count} people including you in my field of view."
+                    elif people_count == 1:
+                        return "I can see you, but no one else is visible to me right now."
+                    else:
+                        return "I don't see anyone in my current field of view."
+                else:
+                    return "I cannot see anyone right now, but that doesn't necessarily mean you're alone."
+            except:
+                return "I'm having trouble checking my visual sensors right now."
+        </python>
+    </template>
+</category>
+
+<category>
+    <pattern>IS ANYONE WITH ME</pattern>
+    <template><srai>AM I ALONE</srai></template>
+</category>
+
+<!-- Relationship Status -->
+<category>
+    <pattern>DO I HAVE A GIRLFRIEND</pattern>
+    <template>
+        <python>
+            from Memory.models import Social_Network
+            try:
+                session = bot.getSessionData(sessionID, "session")
+                girlfriend = Social_Network.nodes.filter(uid=session, relation_type="girlfriend").first()
+                if girlfriend:
+                    return f"Yes, your girlfriend is {girlfriend.person_name}."
+                else:
+                    return "I don't have information about you having a girlfriend."
+            except:
+                return "I'm having trouble accessing your relationship information."
+        </python>
+    </template>
+</category>
+
+<category>
+    <pattern>DO I HAVE A BOYFRIEND</pattern>
+    <template>
+        <python>
+            from Memory.models import Social_Network
+            try:
+                session = bot.getSessionData(sessionID, "session")
+                boyfriend = Social_Network.nodes.filter(uid=session, relation_type="boyfriend").first()
+                if boyfriend:
+                    return f"Yes, your boyfriend is {boyfriend.person_name}."
+                else:
+                    return "I don't have information about you having a boyfriend."
+            except:
+                return "I'm having trouble accessing your relationship information."
+        </python>
+    </template>
+</category>
+
+<!-- Social Learning -->
+<category>
+    <pattern>TELL ME ABOUT *</pattern>
+    <template>
+        <python>
+            person_name = "<star/>"
+            from Memory.models import Social_Network
+            try:
+                session = bot.getSessionData(sessionID, "session")
+                person = Social_Network.nodes.filter(uid=session, person_name__icontains=person_name).first()
+                if person:
+                    return f"{person.person_name} is your {person.relation_type}. They are {person.person_gender.lower()}."
+                else:
+                    return f"I don't have any information about {person_name} in your social network."
+            except:
+                return f"I'm having trouble finding information about {person_name}."
+        </python>
+    </template>
+</category>
+
+<!-- User Recognition -->
+<category>
+    <pattern>DO YOU KNOW WHO I AM</pattern>
+    <template>
+        <python>
+            from Memory.models import Signups
+            try:
+                session = bot.getSessionData(sessionID, "session")
+                user = Signups.nodes.filter(uid=session).first()
+                if user and user.username:
+                    return f"Yes, you are {user.username}! I remember you."
+                else:
+                    return "I know you're talking to me, but I don't know your name yet. What should I call you?"
+            except:
+                return "I'm having trouble accessing your profile information."
+        </python>
+    </template>
+</category>
+
+<category>
+    <pattern>DO YOU REMEMBER ME</pattern>
+    <template><srai>DO YOU KNOW WHO I AM</srai></template>
+</category>
+
+</aiml> 

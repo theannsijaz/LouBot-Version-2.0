@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You - LouBot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logo {
+            color: #007bff;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .message {
+            color: #333;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .highlight {
+            color: #007bff;
+            font-weight: bold;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">LouBot</div>
+            <h1>Thank You for Signing Up!</h1>
+        </div>
+        
+        <div class="message">
+            <p>Dear <span class="highlight">{{ name }}</span>,</p>
+            
+            <p>Thank you for joining LouBot! We're excited to have you on board.</p>
+            
+            <p>Your account has been successfully created with the email: <span class="highlight">{{ email }}</span></p>
+            
+            <p>You can now log in to your account and start exploring our AI-powered features including:</p>
+            <ul>
+                <li>Interactive AI Chat</li>
+                <li>Prolog Knowledge Base Processing</li>
+                <li>Face Recognition</li>
+                <li>Speech-to-Text Capabilities</li>
+                <li>And much more!</li>
+            </ul>
+            
+            <p>If you have any questions or need assistance, please don't hesitate to contact our support team.</p>
+            
+            <p>Welcome to the LouBot family!</p>
+        </div>
+        
+        <div class="footer">
+            <p>Best regards,<br>
+            <strong>A2B LouBot Team</strong></p>
+            <p>This is an automated message. Please do not reply to this email.</p>
+        </div>
+    </div>
+</body>
+</html> 

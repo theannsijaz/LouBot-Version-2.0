@@ -1,0 +1,470 @@
+<aiml>
+<category>
+    <pattern>TAKEOFF</pattern>
+    <template>
+      <set name="takeoff">takeoff</set>
+      <random>
+        <li>OK, taking off.</li>
+        <li>Roger, drone is taking off now.</li>
+        <li>Drone is in the air.</li>
+        <li>Initiating takeoff procedure.</li>
+      </random>
+    </template>
+  </category>
+
+  <category>
+    <pattern>CAN YOU PLEASE TAKEOFF</pattern>
+    <template>
+      <srai>TAKEOFF</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>PLEASE TAKEOFF</pattern>
+    <template>
+      <srai>TAKEOFF</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>INITIATE TAKEOFF</pattern>
+    <template>
+      <srai>TAKEOFF</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>START TAKEOFF</pattern>
+    <template>
+      <srai>TAKEOFF</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>TAKE OFF</pattern>
+    <template>
+      <srai>TAKEOFF</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>LET'S TAKEOFF</pattern>
+    <template>
+      <srai>TAKEOFF</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>LAUNCH</pattern>
+    <template>
+      <srai>TAKEOFF</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>START FLYING</pattern>
+    <template>
+      <srai>TAKEOFF</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>FLY</pattern>
+    <template>
+      <srai>TAKEOFF</srai>
+    </template>
+  </category>
+
+  <category>
+  <pattern>_ TAKEOFF _</pattern>
+  <template>
+    <srai>TAKEOFF</srai>
+  </template>
+  </category>
+
+
+
+
+
+
+  <category>
+    <pattern>TAKEOFF</pattern>
+    <template>
+      <set name="takeoff">takeoff</set>
+      <random>
+        <li>OK, taking off.</li>
+        <li>Roger, drone is taking off now.</li>
+        <li>Drone is in the air.</li>
+        <li>Initiating takeoff procedure.</li>
+      </random>
+    </template>
+  </category>
+
+  <category>
+    <pattern>CAN YOU PLEASE TAKEOFF</pattern>
+    <template>
+      <srai>TAKEOFF</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>PLEASE TAKEOFF</pattern>
+    <template>
+      <srai>TAKEOFF</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>INITIATE TAKEOFF</pattern>
+    <template>
+      <srai>TAKEOFF</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>START TAKEOFF</pattern>
+    <template>
+      <srai>TAKEOFF</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>TAKE OFF</pattern>
+    <template>
+      <srai>TAKEOFF</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>LET'S TAKEOFF</pattern>
+    <template>
+      <srai>TAKEOFF</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>LAUNCH</pattern>
+    <template>
+      <srai>TAKEOFF</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>START FLYING</pattern>
+    <template>
+      <srai>TAKEOFF</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>FLY</pattern>
+    <template>
+      <srai>TAKEOFF</srai>
+    </template>
+  </category>
+
+  <!-- LAND Categories -->
+  <category>
+    <pattern>LAND</pattern>
+    <template>
+      <think>
+        <set name="land">land</set>
+      </think>
+      <random>
+        <li>OK, landing now.</li>
+        <li>Roger, drone is landing.</li>
+        <li>Drone is touching down.</li>
+        <li>Initiating landing procedure.</li>
+      </random>
+    </template>
+  </category>
+
+  <category>
+    <pattern>PLEASE LAND</pattern>
+    <template>
+      <srai>LAND</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>CAN YOU PLEASE LAND</pattern>
+    <template>
+      <srai>LAND</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>INITIATE LANDING</pattern>
+    <template>
+      <srai>LAND</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>START LANDING</pattern>
+    <template>
+      <srai>LAND</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>TOUCHDOWN</pattern>
+    <template>
+      <srai>LAND</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>LET'S LAND</pattern>
+    <template>
+      <srai>LAND</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>DESCEND</pattern>
+    <template>
+      <srai>LAND</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>BRING IT DOWN</pattern>
+    <template>
+      <srai>LAND</srai>
+    </template>
+  </category>
+
+  <category>
+  <pattern>_ LAND _</pattern>
+  <template>
+    <srai>LAND</srai>
+  </template>
+  </category>
+
+
+
+
+
+
+
+
+
+
+<category>
+  <pattern>TURNON MOTORS</pattern>
+  <template>
+    <set name="turnon">turnon</set>
+    <random>
+      <li>OK, Turning on.</li>
+      <li>Roger</li>
+      <li>Initiating motor turning on procedure.</li>
+    </random>
+  </template>
+</category>
+
+<category>
+  <pattern>TURNON MOTORS FOR * SEC</pattern>
+  <template>
+    <think>
+      <set name="sec"><star/></set>
+    </think>
+    <random>
+      <li>OK, Turning on.</li>
+      <li>Roger</li>
+      <li>Initiating motor turning on procedure.</li>
+    </random>
+  </template>
+</category>
+
+<category>
+  <pattern>ACTIVATE MOTORS</pattern>
+  <template>
+    <set name="turnon">turnon</set>
+    <random>
+      <li>OK, motors activated.</li>
+      <li>Roger, motors are now active.</li>
+      <li>Motors are running.</li>
+      <li>Activating motors now.</li>
+    </random>
+  </template>
+</category>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<category>
+  <pattern>TAKE * PICTURE</pattern>
+  <template>
+    <think>
+      <set name="takepicture"><star/></set>
+    </think>
+    <random>
+      <li>OK, taking a picture.</li>
+      <li>Smile! Taking a picture now.</li>
+      <li>Picture captured.</li>
+      <li>Photo taken.</li>
+    </random>
+  </template>
+</category>
+
+
+
+
+
+<category>
+  <pattern>START RECORDING</pattern>
+  <template>
+    <think>
+      <set name="startrecording"><star/></set>
+    </think>
+    <random>
+      <li>OK, starting video recording.</li>
+      <li>Recording started.</li>
+      <li>Video recording is now on.</li>
+      <li>Begin recording.</li>
+    </random>
+  </template>
+</category>
+
+<category>
+  <pattern>STOP RECORDING</pattern>
+  <template>
+    <think>
+      <set name="stoprecording"><star/></set>
+    </think>
+    <random>
+      <li>OK, stopping video recording.</li>
+      <li>Recording stopped.</li>
+      <li>Video recording has ended.</li>
+      <li>End recording.</li>
+    </random>
+  </template>
+</category>
+
+
+<category>
+  <pattern>BATTERY STATUS</pattern>
+  <template>
+    <think>
+      <set name="batterystatus"><star/></set>
+    </think>
+    <random>
+      <li>Checking battery status...</li>
+      <li>Battery status is being retrieved.</li>
+      <li>Hold on, getting battery status.</li>
+      <li>Fetching current battery level.</li>
+    </random>
+  </template>
+</category>
+
+
+<category>
+  <pattern>HOVER</pattern>
+  <template>
+    <think>
+      <set name="hover"><star/></set>
+    </think>
+    <random>
+      <li>OK, hovering in place.</li>
+      <li>Drone is hovering now.</li>
+      <li>Maintaining current position.</li>
+      <li>Hovering initiated.</li>
+    </random>
+  </template>
+</category>
+
+
+<category>
+  <pattern>MOVE FORWARD * CM</pattern>
+  <template>
+    <think>
+      <set name="moveforward"><star/></set>
+    </think>
+    <random>
+      <li>OK, moving forward <star/> meters.</li>
+      <li>Drone is moving forward <star/> meters now.</li>
+      <li>Advancing ahead by <star/> meters.</li>
+      <li>Forward motion of <star/> meters initiated.</li>
+    </random>
+  </template>
+</category>
+
+
+<category>
+  <pattern>MOVE BACKWARD * CM</pattern>
+  <template>
+    <think>
+      <set name="movebackward"><star/></set>
+    </think>
+    <random>
+      <li>OK, moving backward <star/> meters.</li>
+      <li>Drone is moving backward <star/> meters now.</li>
+      <li>Reversing by <star/> meters.</li>
+      <li>Backward motion of <star/> meters initiated.</li>
+    </random>
+  </template>
+</category>
+
+<category>
+  <pattern>MOVE LEFT * CM</pattern>
+  <template>
+    <think>
+      <set name="moveleft"><star/></set>
+    </think>
+    <random>
+      <li>OK, moving left <star/> meters.</li>
+      <li>Drone is moving left <star/> meters now.</li>
+      <li>Shifting left by <star/> meters.</li>
+      <li>Left motion of <star/> meters initiated.</li>
+    </random>
+  </template>
+</category>
+
+<category>
+  <pattern>MOVE RIGHT * CM</pattern>
+  <template>
+    <think>
+      <set name="moveright"><star/></set>
+    </think>
+    <random>
+      <li>OK, moving right <star/> meters.</li>
+      <li>Drone is moving right <star/> meters now.</li>
+      <li>Shifting right by <star/> meters.</li>
+      <li>Right motion of <star/> meters initiated.</li>
+    </random>
+  </template>
+</category>
+
+
+<category>
+  <pattern>ROTATE *</pattern>
+  <template>
+    <think>
+      <set name="rotate"><star/></set>
+    </think>
+    <random>
+      <li>OK, rotating <star/> degrees.</li>
+      <li>Drone is rotating <star/> degrees.</li>
+      <li>Spinning around by <star/> degrees.</li>
+      <li>Rotation of <star/> degrees initiated.</li>
+    </random>
+  </template>
+</category>
+
+
+
+</aiml>

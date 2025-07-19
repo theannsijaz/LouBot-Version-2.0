@@ -73,7 +73,6 @@ LouBot-AI/
 ├── static/                   # CSS, JS, Images
 ├── media/                    # User uploads
 └── yolov8n.pt               # YOLOv8 model file
-```
 
 ## 🛠️ Technology Stack
 

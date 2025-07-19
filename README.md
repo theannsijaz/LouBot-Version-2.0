@@ -44,10 +44,10 @@
 - **YOLO Management Dashboard** for detection configuration
 - **User Profile Management** with gender detection
 
-## Project Structure
+### Project Structure
 
 LouBot-AI/
-├── Memory/                    # Main Django App (AI & Authentication)
+├── Memory/                   # Main Django App (AI & Authentication)
 │   ├── aiml.py               # AIML kernel initialization
 │   ├── webauthn_utils.py     # Biometric authentication
 │   ├── gender_names_db.py    # Name-based gender detection
